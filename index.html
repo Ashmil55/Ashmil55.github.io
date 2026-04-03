@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ashmil55 | Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0d1117; --surface: #161b22; --surface2: #21262d;
+      --border: #30363d; --accent: #58a6ff; --accent2: #1f6feb;
+      --text: #e6edf3; --muted: #8b949e;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; line-height: 1.6; min-height: 100vh; }
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(13,17,23,0.85); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border); padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between; height: 60px;
+    }
+    nav .logo { font-weight: 700; font-size: 1.1rem; color: var(--accent); text-decoration: none; }
+    nav ul { list-style: none; display: flex; gap: 2rem; }
+    nav ul a { color: var(--muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+    nav ul a:hover { color: var(--text); }
+    .hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      justify-content: center; align-items: center; text-align: center;
+      padding: 6rem 2rem 4rem; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(31,111,235,0.15) 0%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%,-60%); pointer-events: none;
+    }
+    .avatar { width: 110px; height: 110px; border-radius: 50%; border: 3px solid var(--accent2); margin-bottom: 1.5rem; box-shadow: 0 0 0 6px rgba(31,111,235,0.15); }
+    .hero h1 { font-size: clamp(2rem,5vw,3.5rem); font-weight: 700; letter-spacing: -1px; margin-bottom: 0.5rem; }
+    .hero h1 span { color: var(--accent); }
+    .hero .tagline { font-size: clamp(1rem,2.5vw,1.25rem); color: var(--muted); margin-bottom: 1.5rem; max-width: 480px; }
+    .badge-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; margin-bottom: 2rem; }
+    .badge { background: var(--surface2); border: 1px solid var(--border); border-radius: 999px; padding: 0.25rem 0.85rem; font-size: 0.78rem; font-weight: 500; color: var(--muted); }
+    .badge.py  { border-color: #3572A5; color: #79b8ff; }
+    .badge.php { border-color: #4F5D95; color: #d2a8ff; }
+    .badge.nb  { border-color: #DA5B0B; color: #ffa657; }
+    .badge.dj  { border-color: #092E20; color: #3fb950; }
+    .btn-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; }
+    .btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1.4rem; border-radius: 8px; font-size: 0.9rem; font-weight: 600; text-decoration: none; transition: opacity 0.2s, transform 0.15s; }
+    .btn:hover { opacity: 0.85; transform: translateY(-1px); }
+    .btn-primary { background: var(--accent2); color: #fff; }
+    .btn-outline  { background: transparent; border: 1px solid var(--border); color: var(--text); }
+    section { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
+    .section-title { font-size: 1.6rem; font-weight: 700; margin-bottom: 0.4rem; letter-spacing: -0.5px; }
+    .section-sub   { color: var(--muted); font-size: 0.95rem; margin-bottom: 2.5rem; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(140px,1fr)); gap: 1rem; margin-bottom: 3rem; }
+    .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; text-align: center; }
+    .stat-card .num   { font-size: 2rem; font-weight: 700; color: var(--accent); }
+    .stat-card .label { font-size: 0.8rem; color: var(--muted); margin-top: 0.2rem; }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(300px,1fr)); gap: 1.25rem; }
+    .project-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; transition: border-color 0.2s, transform 0.2s; text-decoration: none; color: inherit; }
+    .project-card:hover { border-color: var(--accent2); transform: translateY(-3px); }
+    .project-card .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; }
+    .project-card .card-icon { font-size: 1.4rem; }
+    .project-card h3 { font-size: 1rem; font-weight: 600; color: var(--accent); word-break: break-all; }
+    .project-card p  { font-size: 0.87rem; color: var(--muted); flex: 1; }
+    .card-footer { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    .lang-dot   { display: inline-block; width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .lang-label { display: flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; color: var(--muted); }
+    .updated    { font-size: 0.75rem; color: var(--muted); margin-left: auto; }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(180px,1fr)); gap: 1rem; }
+    .skill-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem 1.4rem; display: flex; align-items: center; gap: 0.75rem; }
+    .skill-icon { font-size: 1.5rem; }
+    .skill-card .skill-name { font-size: 0.9rem; font-weight: 600; }
+    .skill-card .skill-type { font-size: 0.75rem; color: var(--muted); }
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before { content: ''; position: absolute; left: 6px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+    .tl-item { position: relative; margin-bottom: 2rem; }
+    .tl-dot { position: absolute; left: -2rem; top: 4px; width: 14px; height: 14px; border-radius: 50%; background: var(--accent2); border: 2px solid var(--bg); }
+    .tl-date  { font-size: 0.78rem; color: var(--muted); margin-bottom: 0.3rem; }
+    .tl-title { font-size: 1rem; font-weight: 600; }
+    .tl-desc  { font-size: 0.875rem; color: var(--muted); margin-top: 0.2rem; }
+    .contact-box { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 3rem 2rem; text-align: center; }
+    .contact-box h2 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .contact-box p  { color: var(--muted); margin-bottom: 2rem; }
+    footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; }
+    footer a { color: var(--accent); text-decoration: none; }
+    @media (max-width: 600px) { nav ul { gap: 1rem; } .hero h1 { font-size: 2rem; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">&lt;Ashmil /&gt;</a>
+  <ul>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#journey">Journey</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <img src="https://avatars.githubusercontent.com/u/43415142?v=4" alt="Ashmil55 avatar" class="avatar" />
+  <h1>Hi, I'm <span>Ashmil</span> &#x1F44B;</h1>
+  <p class="tagline">Developer &amp; Data Enthusiast &middot; Python &middot; Django &middot; Data Analysis</p>
+  <div class="badge-row">
+    <span class="badge py">Python</span>
+    <span class="badge nb">Jupyter Notebook</span>
+    <span class="badge dj">Django</span>
+    <span class="badge php">PHP</span>
+  </div>
+  <div class="btn-row">
+    <a href="https://github.com/Ashmil55" target="_blank" class="btn btn-primary">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      GitHub Profile
+    </a>
+    <a href="#projects" class="btn btn-outline">View Projects</a>
+  </div>
+</div>
+
+<section id="stats">
+  <div class="stats-grid">
+    <div class="stat-card"><div class="num">8</div><div class="label">Repositories</div></div>
+    <div class="stat-card"><div class="num">4</div><div class="label">Languages Used</div></div>
+    <div class="stat-card"><div class="num">6+</div><div class="label">Years on GitHub</div></div>
+    <div class="stat-card"><div class="num">2026</div><div class="label">Latest Project</div></div>
+  </div>
+</section>
+
+<section id="projects">
+  <h2 class="section-title">&#x1F680; Projects</h2>
+  <p class="section-sub">A selection of my public repositories on GitHub</p>
+  <div class="projects-grid">
+    <a href="https://github.com/Ashmil55/chicago-crime-analysis" target="_blank" class="project-card">
+      <div class="card-top"><div class="card-icon">&#x1F4CA;</div><span>&#x2197;</span></div>
+      <h3>chicago-crime-analysis</h3>
+      <p>Data analysis of Chicago crime patterns using Jupyter Notebook — exploring trends, visualisations, and insights from real-world data.</p>
+      <div class="card-footer">
+        <span class="lang-label"><span class="lang-dot" style="background:#DA5B0B"></span>Jupyter Notebook</span>
+        <span class="updated">10 days ago</span>
+      </div>
+    </a>
+    <a href="https://github.com/Ashmil55/my-first-binder" target="_blank" class="project-card">
+      <div class="card-top"><div class="card-icon">&#x1F4D3;</div><span>&#x2197;</span></div>
+      <h3>my-first-binder</h3>
+      <p>Interactive Python notebook hosted via Binder — a hands-on environment ready to run in the browser with zero setup.</p>
+      <div class="card-footer">
+        <span class="lang-label"><span class="lang-dot" style="background:#3572A5"></span>Python</span>
+        <span class="updated">Jul 2023</span>
+      </div>
+    </a>
+    <a href="https://github.com/Ashmil55/django-blog" target="_blank" class="project-card">
+      <div class="card-top"><div class="card-icon">&#x1F4DD;</div><span>&#x2197;</span></div>
+      <h3>django-blog</h3>
+      <p>A full-featured blog application built with Django. Demonstrates MVC architecture, URL routing, models, views, and templates.</p>
+      <div class="card-footer">
+        <span class="lang-label"><span class="lang-dot" style="background:#3572A5"></span>Python &middot; Django</span>
+        <span class="updated">May 2020</span>
+      </div>
+    </a>
+    <a href="https://github.com/Ashmil55/blog-ashmil-django" target="_blank" class="project-card">
+      <div class="card-top"><div class="card-icon">&#x1F310;</div><span>&#x2197;</span></div>
+      <h3>blog-ashmil-django</h3>
+      <p>Personal blog project built with Django — exploring templating, authentication and the Django deployment workflow.</p>
+      <div class="card-footer">
+        <span class="lang-label"><span class="lang-dot" style="background:#092E20"></span>Django</span>
+        <span class="updated">May 2020</span>
+      </div>
+    </a>
+    <a href="https://github.com/Ashmil55/onlinemovieticketbooking" target="_blank" class="project-card">
+      <div class="card-top"><div class="card-icon">&#x1F3AC;</div><span>&#x2197;</span></div>
+      <h3>onlinemovieticketbooking</h3>
+      <p>An online movie ticket booking web app built with PHP, featuring movie browsing, seat selection and booking management.</p>
+      <div class="card-footer">
+        <span class="lang-label"><span class="lang-dot" style="background:#4F5D95"></span>PHP</span>
+        <span class="updated">May 2020</span>
+      </div>
+    </a>
+    <a href="https://github.com/Ashmil55/thinkingCSPython" target="_blank" class="project-card">
+      <div class="card-top"><div class="card-icon">&#x1F9E0;</div><span>&#x2197;</span></div>
+      <h3>thinkingCSPython</h3>
+      <p>Jupyter notebooks working through Computer Science fundamentals with Python — algorithms, data structures and exercises.</p>
+      <div class="card-footer">
+        <span class="lang-label"><span class="lang-dot" style="background:#DA5B0B"></span>Jupyter Notebook</span>
+        <span class="updated">May 2020</span>
+      </div>
+    </a>
+    <a href="https://github.com/Ashmil55/kattisSolutions" target="_blank" class="project-card">
+      <div class="card-top"><div class="card-icon">&#x26A1;</div><span>&#x2197;</span></div>
+      <h3>kattisSolutions</h3>
+      <p>Solutions to competitive programming problems on Kattis, written in Python — covering a wide range of algorithmic challenges.</p>
+      <div class="card-footer">
+        <span class="lang-label"><span class="lang-dot" style="background:#3572A5"></span>Python</span>
+        <span class="updated">Oct 2019</span>
+      </div>
+    </a>
+    <a href="https://github.com/Ashmil55/datatables" target="_blank" class="project-card">
+      <div class="card-top"><div class="card-icon">&#x1F4CB;</div><span>&#x2197;</span></div>
+      <h3>datatables</h3>
+      <p>Exploration of data table integrations — displaying, filtering and sorting tabular data efficiently on the web.</p>
+      <div class="card-footer">
+        <span class="lang-label"><span class="lang-dot" style="background:#8b949e"></span>Other</span>
+        <span class="updated">Jun 2020</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section id="skills">
+  <h2 class="section-title">&#x1F6E0; Skills &amp; Technologies</h2>
+  <p class="section-sub">Languages and tools I work with</p>
+  <div class="skills-grid">
+    <div class="skill-card"><span class="skill-icon">&#x1F40D;</span><div><div class="skill-name">Python</div><div class="skill-type">Language</div></div></div>
+    <div class="skill-card"><span class="skill-icon">&#x1F4D3;</span><div><div class="skill-name">Jupyter Notebook</div><div class="skill-type">Data / Notebooks</div></div></div>
+    <div class="skill-card"><span class="skill-icon">&#x1F33F;</span><div><div class="skill-name">Django</div><div class="skill-type">Web Framework</div></div></div>
+    <div class="skill-card"><span class="skill-icon">&#x1F418;</span><div><div class="skill-name">PHP</div><div class="skill-type">Language</div></div></div>
+    <div class="skill-card"><span class="skill-icon">&#x1F4CA;</span><div><div class="skill-name">Data Analysis</div><div class="skill-type">Domain</div></div></div>
+    <div class="skill-card"><span class="skill-icon">&#x26A1;</span><div><div class="skill-name">Competitive Programming</div><div class="skill-type">Problem Solving</div></div></div>
+    <div class="skill-card"><span class="skill-icon">&#x1F419;</span><div><div class="skill-name">Git / GitHub</div><div class="skill-type">Version Control</div></div></div>
+    <div class="skill-card"><span class="skill-icon">&#x1F310;</span><div><div class="skill-name">Web Development</div><div class="skill-type">Domain</div></div></div>
+  </div>
+</section>
+
+<section id="journey">
+  <h2 class="section-title">&#x1F4C5; My Journey</h2>
+  <p class="section-sub">Milestones along the way</p>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">2026</div>
+      <div class="tl-title">Chicago Crime Analysis</div>
+      <div class="tl-desc">Deep-dive data analysis project using Jupyter Notebook, exploring real-world crime datasets with Python.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">2023</div>
+      <div class="tl-title">Binder &amp; Interactive Notebooks</div>
+      <div class="tl-desc">Explored cloud-hosted interactive Python notebooks using Binder for shareable, executable data science work.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">2020</div>
+      <div class="tl-title">Django Web Projects</div>
+      <div class="tl-desc">Built multiple full-stack blog applications using Django, learning MVC, ORM, authentication, and deployment.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">2020</div>
+      <div class="tl-title">PHP Web Application</div>
+      <div class="tl-desc">Developed an online movie ticket booking system in PHP with seat selection and booking management.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">2019</div>
+      <div class="tl-title">Competitive Programming on Kattis</div>
+      <div class="tl-desc">Started solving algorithmic problems on Kattis in Python, building a strong foundation in CS fundamentals.</div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-box">
+    <h2>Let's Connect &#x1F91D;</h2>
+    <p>I'm always open to interesting projects, collaborations, and conversations.</p>
+    <div class="btn-row" style="justify-content:center">
+      <a href="https://github.com/Ashmil55" target="_blank" class="btn btn-primary">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        Visit GitHub
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Crafted with &#x2764;&#xFE0F; by <a href="https://github.com/Ashmil55">Ashmil55</a> &middot; <a href="https://github.com/Ashmil55?tab=repositories">View all repositories &rarr;</a></p>
+</footer>
+
+</body>
+</html>
